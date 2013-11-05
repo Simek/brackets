@@ -65,7 +65,7 @@ define(function LiveDevelopment(require, exports, module) {
 
     require("utils/Global");
 
-    var _ = brackets.getModule("thirdparty/lodash");
+    var _ = require("thirdparty/lodash");
 
     // Status Codes
     var STATUS_ERROR          = exports.STATUS_ERROR          = -1;
@@ -569,7 +569,7 @@ define(function LiveDevelopment(require, exports, module) {
             // After (1) the interstitial page loads, (2) then browser navigation
             // to the base URL is completed, and (3) the agents finish loading
             // gather related documents and finally set status to STATUS_ACTIVE.
-            var doc = _getCurrentDocument();  // TODO: probably wrong...
+            var doc = _liveDocument.doc;
 
             if (doc) {
                 var status = STATUS_ACTIVE,

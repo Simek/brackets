@@ -301,9 +301,10 @@ a, img {
         left: 5px;
         width: 40px;
         text-align: center;
-        background-color: rgba(0,0,0,0.8);
-        color: white;
-        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 3px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
 }
 
@@ -671,6 +672,11 @@ a, img {
 }
 
 /* Styles for inline editors */
+
+.inline-text-editor {
+    line-height: 0px;
+}
+
 .inline-widget {
     position: relative;
     overflow: hidden;
@@ -693,11 +699,13 @@ a, img {
     }
 
     .inline-editor-header {
+        display: inline-block;
         padding: 10px 10px 0px 40px;
 
         .filename {
+            vertical-align: middle;
             font-family: @sansFontFamily;
-            font-size: 1.1em;
+            font-size: 13px;
             color: @bc-black;
 
             // Filename header is clickable (it's an <a> tag, so we get underscore on hover by
