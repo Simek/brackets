@@ -81,6 +81,7 @@ define(function (require, exports, module) {
         Resizer                 = require("utils/Resizer"),
         LiveDevelopmentMain     = require("LiveDevelopment/main"),
         NodeConnection          = require("utils/NodeConnection"),
+        NodeDomain              = require("utils/NodeDomain"),
         ExtensionUtils          = require("utils/ExtensionUtils"),
         DragAndDrop             = require("utils/DragAndDrop"),
         ColorUtils              = require("utils/ColorUtils"),
@@ -100,7 +101,10 @@ define(function (require, exports, module) {
     require("search/FindReplace");
     require("extensibility/InstallExtensionDialog");
     require("extensibility/ExtensionManagerDialog");
+    require("editor/ImageViewer");
     
+    // Deprecated modules loaded just so extensions can still use them for now
+    require("utils/CollectionUtils");
     // Compatibility shims for filesystem API migration
     require("project/FileIndexManager");
     require("file/NativeFileSystem");
@@ -210,11 +214,10 @@ define(function (require, exports, module) {
                     // the samples folder on first launch), open it automatically. (We explicitly check for the
                     // samples folder in case this is the first time we're launching Brackets after upgrading from
                     // an old version that might not have set the "afterFirstLaunch" pref.)
-                    var prefs = PreferencesManager.getPreferenceStorage(module),
-                        deferred = new $.Deferred();
+                    var deferred = new $.Deferred();
                     
-                    if (!params.get("skipSampleProjectLoad") && !prefs.getValue("afterFirstLaunch")) {
-                        prefs.setValue("afterFirstLaunch", "true");
+                    if (!params.get("skipSampleProjectLoad") && !PreferencesManager.getViewState("afterFirstLaunch")) {
+                        PreferencesManager.setViewState("afterFirstLaunch", "true");
                         if (ProjectManager.isWelcomeProjectPath(initialProjectPath)) {
                             FileSystem.resolve(initialProjectPath + "index.html", function (err, file) {
                                 if (!err) {
@@ -383,6 +386,5 @@ define(function (require, exports, module) {
     // Dispatch htmlReady event
     _beforeHTMLReady();
     AppInit._dispatchReady(AppInit.HTML_READY);
-
     $(window.document).ready(_onReady);
 });
